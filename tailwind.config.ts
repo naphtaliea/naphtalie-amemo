@@ -84,12 +84,21 @@ export default {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        typewriter: {
+          "0%": { width: "0" },
+          "100%": { width: "100%" },
+        },
+        blink: {
+          "0%, 100%": { borderColor: "hsl(var(--primary))" },
+          "50%": { borderColor: "transparent" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "pulse-slow": "pulse-slow 3s ease-in-out infinite",
         float: "float 6s ease-in-out infinite",
+        blink: "blink 1s step-end infinite",
       },
     },
   },
