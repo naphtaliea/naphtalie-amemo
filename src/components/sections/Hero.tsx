@@ -75,7 +75,7 @@ const Hero = () => {
             &quot;Securing systems, one vulnerability at a time.&quot;
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
             <Button asChild size="lg" className="gap-2 text-base">
               <a href="#projects">
                 <Briefcase className="w-5 h-5" />
