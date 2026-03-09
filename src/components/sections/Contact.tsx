@@ -74,6 +74,7 @@ const Contact = () => {
                 <Input
                   type="text"
                   id="name"
+                  name="name"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
