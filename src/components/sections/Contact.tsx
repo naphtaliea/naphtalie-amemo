@@ -60,6 +60,7 @@ const Contact = () => {
           </motion.div>
 
           <motion.form
+            ref={formRef}
             onSubmit={handleSubmit}
             className="space-y-6"
             initial={{ opacity: 0, y: 20 }}
