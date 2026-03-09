@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Send, Github, Linkedin, Mail } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
