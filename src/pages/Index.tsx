@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
@@ -8,21 +10,37 @@ import Blog from "@/components/sections/Blog";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
 import CursorGlow from "@/components/sections/CursorGlow";
+import TerminalBoot from "@/components/TerminalBoot";
 
 const Index = () => {
+  const [booted, setBooted] = useState(false);
+
   return (
-    <div className="min-h-screen bg-background">
-      <CursorGlow />
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Certifications />
-      <Blog />
-      <Contact />
-      <Footer />
-    </div>
+    <>
+      <AnimatePresence>
+        {!booted && <TerminalBoot onComplete={() => setBooted(true)} />}
+      </AnimatePresence>
+
+      {booted && (
+        <motion.div
+          className="min-h-screen bg-background"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <CursorGlow />
+          <Navbar />
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Certifications />
+          <Blog />
+          <Contact />
+          <Footer />
+        </motion.div>
+      )}
+    </>
   );
 };
 
