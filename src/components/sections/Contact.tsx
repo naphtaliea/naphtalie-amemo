@@ -13,20 +13,33 @@ const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // TODO: Wire up EmailJS here when user provides credentials
-    // For now, simulate submission
-    setTimeout(() => {
+    try {
+      await emailjs.sendForm(
+        "service_uqwilvs",
+        "template_rgxwm9g",
+        formRef.current!,
+        "NnZM0QV_OXiG6zpzw"
+      );
       toast({
         title: "Message sent!",
         description: "Thanks for reaching out. I'll get back to you soon.",
       });
       setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      toast({
+        title: "Failed to send",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
