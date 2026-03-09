@@ -75,7 +75,7 @@ const Hero = () => {
             &quot;Securing systems, one vulnerability at a time.&quot;
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
             <Button asChild size="lg" className="gap-2 text-base">
               <a href="#projects">
                 <Briefcase className="w-5 h-5" />
@@ -92,7 +92,7 @@ const Hero = () => {
         </motion.div>
 
         <motion.div
-          className="absolute bottom-20 left-1/2 -translate-x-1/2"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
