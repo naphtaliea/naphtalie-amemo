@@ -101,6 +101,7 @@ const Contact = () => {
               <Label htmlFor="message">Message</Label>
               <Textarea
                 id="message"
+                name="message"
                 required
                 rows={5}
                 value={formData.message}
