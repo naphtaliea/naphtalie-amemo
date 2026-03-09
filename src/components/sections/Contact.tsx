@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Send, Github, Linkedin, Mail } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -12,20 +13,33 @@ const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // TODO: Wire up EmailJS here when user provides credentials
-    // For now, simulate submission
-    setTimeout(() => {
+    try {
+      await emailjs.sendForm(
+        "service_uqwilvs",
+        "template_rgxwm9g",
+        formRef.current!,
+        "NnZM0QV_OXiG6zpzw"
+      );
       toast({
         title: "Message sent!",
         description: "Thanks for reaching out. I'll get back to you soon.",
       });
       setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      toast({
+        title: "Failed to send",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -46,6 +60,7 @@ const Contact = () => {
           </motion.div>
 
           <motion.form
+            ref={formRef}
             onSubmit={handleSubmit}
             className="space-y-6"
             initial={{ opacity: 0, y: 20 }}
@@ -59,6 +74,7 @@ const Contact = () => {
                 <Input
                   type="text"
                   id="name"
+                  name="name"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -71,6 +87,7 @@ const Contact = () => {
                 <Input
                   type="email"
                   id="email"
+                  name="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -84,6 +101,7 @@ const Contact = () => {
               <Label htmlFor="message">Message</Label>
               <Textarea
                 id="message"
+                name="message"
                 required
                 rows={5}
                 value={formData.message}
