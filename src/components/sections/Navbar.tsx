@@ -106,11 +106,27 @@ const Navbar = () => {
               </Link>
             )}
 
-            <div className="flex items-center gap-2 ml-2">
-              <Sun className="w-4 h-4 text-muted-foreground" />
-              <Switch checked={isDark} onCheckedChange={toggleTheme} aria-label="Toggle dark mode" />
-              <Moon className="w-4 h-4 text-muted-foreground" />
-            </div>
+            <button
+              onClick={toggleTheme}
+              className="relative w-14 h-8 rounded-full bg-secondary border border-border flex items-center transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              aria-label="Toggle dark mode"
+            >
+              <motion.div
+                className="absolute w-6 h-6 rounded-full bg-primary flex items-center justify-center"
+                animate={{ x: isDark ? 28 : 4 }}
+                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+              >
+                <motion.div
+                  key={isDark ? "moon" : "sun"}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {isDark ? <Moon className="w-3.5 h-3.5 text-primary-foreground" /> : <Sun className="w-3.5 h-3.5 text-primary-foreground" />}
+                </motion.div>
+              </motion.div>
+            </button>
           </div>
 
           {/* Mobile */}
