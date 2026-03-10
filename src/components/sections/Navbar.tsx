@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { Shield, Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, Sun, Moon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Switch } from "@/components/ui/switch";
+import { motion } from "framer-motion";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
