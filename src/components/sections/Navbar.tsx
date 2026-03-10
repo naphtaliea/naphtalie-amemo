@@ -131,11 +131,26 @@ const Navbar = () => {
 
           {/* Mobile */}
           <div className="flex md:hidden items-center gap-3">
-            <div className="flex items-center gap-1">
-              <Sun className="w-3 h-3 text-muted-foreground" />
-              <Switch checked={isDark} onCheckedChange={toggleTheme} aria-label="Toggle dark mode" className="scale-75" />
-              <Moon className="w-3 h-3 text-muted-foreground" />
-            </div>
+            <button
+              onClick={toggleTheme}
+              className="relative w-12 h-7 rounded-full bg-secondary border border-border flex items-center transition-colors duration-300 focus:outline-none"
+              aria-label="Toggle dark mode"
+            >
+              <motion.div
+                className="absolute w-5 h-5 rounded-full bg-primary flex items-center justify-center"
+                animate={{ x: isDark ? 24 : 3 }}
+                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+              >
+                <motion.div
+                  key={isDark ? "moon-m" : "sun-m"}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {isDark ? <Moon className="w-3 h-3 text-primary-foreground" /> : <Sun className="w-3 h-3 text-primary-foreground" />}
+                </motion.div>
+              </motion.div>
+            </button>
 
             <Sheet>
               <SheetTrigger asChild>
