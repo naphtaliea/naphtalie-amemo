@@ -81,33 +81,35 @@ const Skills = () => {
               })}
             </TabsList>
 
-            {Object.entries(SKILLS_DATA).map(([category, data]) => (
-              <TabsContent key={category} value={category}>
-                <div className="flex flex-wrap gap-3 justify-center">
-                  {data.skills.map((skill, i) => (
-                    <Tooltip key={skill.name}>
-                      <TooltipTrigger asChild>
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: i * 0.05 }}
-                        >
-                          <Badge
-                            variant="secondary"
-                            className="px-4 py-2 text-sm cursor-default hover:bg-primary hover:text-primary-foreground transition-colors"
+            <div className="relative min-h-[80px]">
+              {Object.entries(SKILLS_DATA).map(([category, data]) => (
+                <TabsContent key={category} value={category} className="mt-0 absolute inset-x-0 top-0 data-[state=inactive]:hidden">
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    {data.skills.map((skill, i) => (
+                      <Tooltip key={skill.name}>
+                        <TooltipTrigger asChild>
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: i * 0.05 }}
                           >
-                            {skill.name}
-                          </Badge>
-                        </motion.div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{skill.desc}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  ))}
-                </div>
-              </TabsContent>
-            ))}
+                            <Badge
+                              variant="secondary"
+                              className="px-4 py-2 text-sm cursor-default hover:bg-primary hover:text-primary-foreground transition-colors"
+                            >
+                              {skill.name}
+                            </Badge>
+                          </motion.div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{skill.desc}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    ))}
+                  </div>
+                </TabsContent>
+              ))}
+            </div>
           </Tabs>
         </motion.div>
       </div>
