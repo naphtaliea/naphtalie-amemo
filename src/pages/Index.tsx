@@ -9,7 +9,8 @@ import Certifications from "@/components/sections/Certifications";
 import Blog from "@/components/sections/Blog";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
-import CursorGlow from "@/components/sections/CursorGlow";
+import ScanlineOverlay from "@/components/sections/ScanlineOverlay";
+import StatusBar from "@/components/sections/StatusBar";
 import TerminalBoot from "@/components/TerminalBoot";
 
 const Index = () => {
@@ -23,12 +24,12 @@ const Index = () => {
 
       {booted && (
         <motion.div
-          className="min-h-screen bg-background"
+          className="min-h-screen bg-background pb-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <CursorGlow />
+          <ScanlineOverlay />
           <Navbar />
           <Hero />
           <About />
@@ -38,6 +39,7 @@ const Index = () => {
           <Blog />
           <Contact />
           <Footer />
+          <StatusBar />
         </motion.div>
       )}
     </>

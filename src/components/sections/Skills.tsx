@@ -1,4 +1,4 @@
-import { Shield, Globe, Code, Terminal } from "lucide-react";
+import { Shield, Globe, Code, Terminal, Megaphone } from "lucide-react";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -31,6 +31,7 @@ const SKILLS_DATA = {
     skills: [
       { name: "Python", desc: "Scripting & automation" },
       { name: "JavaScript", desc: "Web development" },
+      { name: "TypeScript", desc: "Typed JavaScript for scalable apps" },
       { name: "Bash", desc: "Shell scripting & automation" },
     ],
   },
@@ -40,6 +41,15 @@ const SKILLS_DATA = {
       { name: "TryHackMe", desc: "Cybersecurity training platform" },
       { name: "Hack The Box", desc: "Penetration testing labs" },
       { name: "GitHub", desc: "Code hosting & collaboration" },
+    ],
+  },
+  "Web & Marketing": {
+    icon: Megaphone,
+    skills: [
+      { name: "React", desc: "Front-end UI library" },
+      { name: "Web Development", desc: "Building and shipping web apps" },
+      { name: "Canva", desc: "Design & content creation" },
+      { name: "Meta Ads", desc: "Facebook & Instagram ad campaigns" },
     ],
   },
 };
@@ -68,7 +78,7 @@ const Skills = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <Tabs defaultValue="Security Tools" className="max-w-3xl mx-auto">
-            <TabsList className="grid grid-cols-2 md:grid-cols-4 w-full bg-secondary/50 mb-8">
+            <TabsList className="grid grid-cols-2 md:grid-cols-5 w-full bg-secondary/50 mb-8">
               {Object.entries(SKILLS_DATA).map(([category, data]) => {
                 const Icon = data.icon;
                 return (

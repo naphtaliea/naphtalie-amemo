@@ -1,24 +1,12 @@
 import { ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
+import { POSTS, getCaseNumber } from "@/data/posts";
 
 const Blog = () => {
-  const { data: posts, isLoading } = useQuery({
-    queryKey: ["posts"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("posts")
-        .select("*")
-        .order("date", { ascending: false });
-      if (error) throw error;
-      return data;
-    },
-  });
+  const posts = [...POSTS].sort((a, b) => (a.date < b.date ? 1 : -1));
 
   return (
     <section id="blog" className="py-20 md:py-32 bg-secondary/30 relative z-10">
@@ -37,22 +25,7 @@ const Blog = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {isLoading &&
-            [1, 2, 3].map((i) => (
-              <Card key={i} className="bg-card border-border">
-                <CardHeader>
-                  <Skeleton className="h-4 w-24" />
-                  <Skeleton className="h-6 w-full mt-2" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-3/4 mt-2" />
-                  <Skeleton className="h-4 w-20 mt-4" />
-                </CardContent>
-              </Card>
-            ))}
-
-          {posts?.map((post, index) => (
+          {posts.map((post, index) => (
             <motion.div
               key={post.id}
               initial={{ opacity: 0, y: 30 }}
@@ -62,7 +35,8 @@ const Blog = () => {
             >
               <Card className="h-full bg-card border-border hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
                 <CardHeader>
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span className="text-xs font-mono text-primary">{getCaseNumber(post.slug)}</span>
                     <time className="text-xs text-muted-foreground font-mono">{post.date}</time>
                     <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-0">
                       {post.category}

@@ -60,7 +60,7 @@ const Hero = () => {
             <span className="font-mono">Available for opportunities</span>
           </motion.div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-4 tracking-tight">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-4 tracking-tight">
             NAPHT<span className="text-primary">A</span>LIE
           </h1>
 
@@ -83,7 +83,7 @@ const Hero = () => {
               </a>
             </Button>
             <Button asChild variant="outline" size="lg" className="gap-2 text-base border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-              <a href="#">
+              <a href="/Naphtalie-Amemo-CV.pdf" download>
                 <Download className="w-5 h-5" />
                 Download CV
               </a>

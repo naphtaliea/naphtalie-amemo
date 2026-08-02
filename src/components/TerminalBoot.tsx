@@ -9,7 +9,7 @@ const BOOT_LINES = [
   { text: "$ loading portfolio.config", delay: 1400 },
   { text: "[OK] components loaded: 9/9", delay: 1800 },
   { text: "[OK] design system initialized", delay: 2100 },
-  { text: "[OK] cursor glow enabled", delay: 2400 },
+  { text: "[OK] scanline overlay enabled", delay: 2400 },
   { text: "$ naphtalie.dev --launch", delay: 2700 },
   { text: "", delay: 3100, isReady: true },
 ];

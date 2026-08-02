@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { Menu, Sun, Moon } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { motion } from "framer-motion";
+import { useActiveSection } from "@/hooks/use-active-section";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -16,21 +16,13 @@ const NAV_LINKS = [
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [activeSection, setActiveSection] = useState("");
-  const [isDark, setIsDark] = useState(true);
   const lastScrollY = useRef(0);
   const location = useLocation();
   const isHome = location.pathname === "/";
-
-  useEffect(() => {
-    // Default to dark
-    document.documentElement.classList.add("dark");
-  }, []);
-
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle("dark");
-  };
+  const activeSection = useActiveSection(
+    NAV_LINKS.map((l) => l.href.replace("#", "")),
+    isHome
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,29 +36,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Intersection Observer for active section
-  useEffect(() => {
-    if (!isHome) return;
-    const sections = NAV_LINKS.map(l => l.href.replace("#", ""));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-40% 0px -50% 0px" }
-    );
-
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, [isHome]);
-
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -79,7 +48,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link
             to="/"
-            className="font-mono text-lg font-semibold text-foreground flex items-center gap-1"
+            className="font-display text-lg font-bold text-foreground flex items-center gap-1"
           >
             <span className="text-primary">&lt;</span>
             <span>Naphtalie</span>
@@ -105,53 +74,10 @@ const Navbar = () => {
                 Home
               </Link>
             )}
-
-            <button
-              onClick={toggleTheme}
-              className="relative w-14 h-8 rounded-full bg-secondary border border-border flex items-center transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              aria-label="Toggle dark mode"
-            >
-              <motion.div
-                className="absolute w-6 h-6 rounded-full bg-primary flex items-center justify-center"
-                animate={{ x: isDark ? 28 : 4 }}
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-              >
-                <motion.div
-                  key={isDark ? "moon" : "sun"}
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {isDark ? <Moon className="w-3.5 h-3.5 text-primary-foreground" /> : <Sun className="w-3.5 h-3.5 text-primary-foreground" />}
-                </motion.div>
-              </motion.div>
-            </button>
           </div>
 
           {/* Mobile */}
           <div className="flex md:hidden items-center gap-3">
-            <button
-              onClick={toggleTheme}
-              className="relative w-12 h-7 rounded-full bg-secondary border border-border flex items-center transition-colors duration-300 focus:outline-none"
-              aria-label="Toggle dark mode"
-            >
-              <motion.div
-                className="absolute w-5 h-5 rounded-full bg-primary flex items-center justify-center"
-                animate={{ x: isDark ? 24 : 3 }}
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-              >
-                <motion.div
-                  key={isDark ? "moon-m" : "sun-m"}
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {isDark ? <Moon className="w-3 h-3 text-primary-foreground" /> : <Sun className="w-3 h-3 text-primary-foreground" />}
-                </motion.div>
-              </motion.div>
-            </button>
-
             <Sheet>
               <SheetTrigger asChild>
                 <button className="p-2 text-foreground" aria-label="Open menu">

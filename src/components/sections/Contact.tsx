@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Send, Github, Linkedin, Mail } from "lucide-react";
+import { Send, Github, Linkedin, Mail, MessageCircle } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
@@ -53,9 +53,9 @@ const Contact = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="section-title">Get In Touch</h2>
+            <h2 className="section-title">Open a Channel</h2>
             <p className="section-subtitle mx-auto">
-              Have a question or want to work together? Drop me a message!
+              Have a question or want to work together? Send a message directly.
             </p>
           </motion.div>
 
@@ -123,13 +123,16 @@ const Contact = () => {
 
           <div className="flex items-center justify-center gap-4 mt-12">
             {[
-              { icon: Github, href: "#", label: "GitHub" },
-              { icon: Linkedin, href: "#", label: "LinkedIn" },
-              { icon: Mail, href: "#", label: "Email" },
+              { icon: Github, href: "https://github.com/naphtaliea", label: "GitHub" },
+              { icon: Linkedin, href: "https://www.linkedin.com/in/naphtalie-amemo/", label: "LinkedIn" },
+              { icon: Mail, href: "mailto:amemonaphtalie@gmail.com", label: "Email" },
+              { icon: MessageCircle, href: "https://wa.me/233257218162", label: "WhatsApp" },
             ].map(({ icon: Icon, href, label }) => (
               <a
                 key={label}
                 href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
                 aria-label={label}
               >

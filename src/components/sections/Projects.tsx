@@ -3,43 +3,73 @@ import { Github, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 
+type Severity = "Critical" | "High" | "Medium" | "Low";
+
 interface Project {
   title: string;
   description: string;
   tags: string[];
   github?: string;
   live?: string;
+  severity?: Severity;
 }
 
+const SEVERITY_STYLES: Record<Severity, string> = {
+  Critical: "bg-red-500/10 text-red-400 border-red-500/30",
+  High: "bg-orange-500/10 text-orange-400 border-orange-500/30",
+  Medium: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30",
+  Low: "bg-blue-500/10 text-blue-400 border-blue-500/30",
+};
+
 const DEV_PROJECTS: Project[] = [
+  {
+    title: "RapidBoost",
+    description:
+      "A self-built e-commerce/SMM platform for social media growth services, with payment integration and an admin dashboard.",
+    tags: ["React", "TypeScript", "Supabase", "Vercel"],
+    live: "https://rapidboostgh.com",
+  },
   {
     title: "BookEasy",
     description:
       "A SaaS appointment booking platform for Ghanaian businesses, enabling service providers to manage bookings and accept payments online.",
     tags: ["React", "TypeScript", "Supabase", "Paystack"],
-    live: "#",
   },
   {
     title: "GhanaFeed",
     description:
       "A news aggregator that pulls and displays headlines from 11 Ghanaian news sources in one clean feed.",
     tags: ["React", "Node.js", "Express"],
-    live: "#",
   },
 ];
 
 const SECURITY_PROJECTS: Project[] = [
   {
-    title: "Home SIEM Lab",
+    title: "RapidBoost Security Assessment",
     description:
-      "A fully configured home security operations lab using Wazuh for log collection, threat detection, and alerting across three virtual machines.",
-    tags: ["Wazuh", "VirtualBox", "Kali Linux", "Ubuntu Server", "Metasploitable 2"],
+      "Conducted an independent penetration test of RapidBoost (a self-built e-commerce/SMM platform), identifying and remediating a critical database access-control flaw along with several other vulnerabilities.",
+    tags: ["Penetration Testing", "Access Control", "Web Security"],
+    severity: "Critical",
+  },
+  {
+    title: "Food-Delivery App Security Assessment",
+    description:
+      "Conducted a security assessment of a food-delivery mobile application as an academic project, identifying and documenting multiple CVEs/CWEs, including a denial-of-service vulnerability and insecure token storage.",
+    tags: ["Mobile Security", "CVE/CWE", "Vulnerability Assessment"],
+    severity: "High",
+  },
+  {
+    title: "Home Security Lab",
+    description:
+      "Built a home lab using Wazuh SIEM, Kali Linux, and Metasploitable 2 to practice applied penetration-testing techniques.",
+    tags: ["Wazuh", "Kali Linux", "Metasploitable 2"],
   },
   {
     title: "Vulnerability Assessment — Metasploitable 2",
     description:
       "A full penetration test and documented vulnerability assessment on Metasploitable 2, covering enumeration, exploitation, and reporting.",
     tags: ["Nmap", "Metasploit", "Kali Linux"],
+    severity: "Medium",
   },
 ];
 
@@ -57,7 +87,16 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   >
     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
       <div className="flex-1 min-w-0">
-        <h3 className="text-xl font-bold text-foreground mb-2">{project.title}</h3>
+        <div className="flex flex-wrap items-center gap-2 mb-2">
+          <h3 className="text-xl font-bold text-foreground">{project.title}</h3>
+          {project.severity && (
+            <span
+              className={`font-mono text-[10px] uppercase tracking-wide px-2 py-0.5 rounded border ${SEVERITY_STYLES[project.severity]}`}
+            >
+              {project.severity}
+            </span>
+          )}
+        </div>
         <p className="text-muted-foreground text-sm mb-4">{project.description}</p>
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
