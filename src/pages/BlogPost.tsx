@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import Masthead from "@/components/sections/Masthead";
 import Footer from "@/components/sections/Footer";
-import { POSTS, getCaseNumber } from "@/data/posts";
+import { POSTS } from "@/data/posts";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -28,17 +28,15 @@ const BlogPost = () => {
 
         {post && (
           <article>
-            <header className="mb-8 border-b border-border pb-6">
-              <div className="flex items-center gap-3 mb-3 flex-wrap font-mono text-xs text-muted-foreground">
-                <span className="text-primary">{getCaseNumber(post.slug)}</span>
-                <time>{post.date}</time>
-                <span className="case-label">{post.category}</span>
-              </div>
-              <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+            <header className="mb-8">
+              <p className="font-mono text-xs text-muted-foreground mb-3">
+                {post.date} · {post.category}
+              </p>
+              <h1 className="font-display text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">
                 {post.title}
               </h1>
             </header>
-            <div className="text-foreground/80 leading-relaxed whitespace-pre-line max-w-xl">
+            <div className="text-foreground/70 text-lg leading-relaxed whitespace-pre-line max-w-xl">
               {post.content}
             </div>
           </article>

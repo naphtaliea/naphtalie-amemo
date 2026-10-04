@@ -5,78 +5,56 @@ type Severity = "Critical" | "High" | "Medium" | "Low";
 interface Finding {
   title: string;
   description: string;
-  tags: string[];
   severity?: Severity;
 }
 
-const SEVERITY_STYLES: Record<Severity, string> = {
-  Critical: "bg-[hsl(var(--severity-critical)/0.1)] text-[hsl(var(--severity-critical))] border-[hsl(var(--severity-critical)/0.4)]",
-  High: "bg-[hsl(var(--severity-high)/0.1)] text-[hsl(var(--severity-high))] border-[hsl(var(--severity-high)/0.4)]",
-  Medium: "bg-[hsl(var(--severity-medium)/0.1)] text-[hsl(var(--severity-medium))] border-[hsl(var(--severity-medium)/0.4)]",
-  Low: "bg-[hsl(var(--severity-low)/0.1)] text-[hsl(var(--severity-low))] border-[hsl(var(--severity-low)/0.4)]",
+const SEVERITY_COLOR: Record<Severity, string> = {
+  Critical: "bg-[hsl(var(--severity-critical))]",
+  High: "bg-[hsl(var(--severity-high))]",
+  Medium: "bg-[hsl(var(--severity-medium))]",
+  Low: "bg-[hsl(var(--severity-low))]",
 };
 
 const FINDINGS: Finding[] = [
   {
     title: "RapidBoost Security Assessment",
     description:
-      "Conducted an independent penetration test of RapidBoost (a self-built e-commerce/SMM platform), identifying and remediating a critical database access-control flaw along with several other vulnerabilities.",
-    tags: ["Penetration Testing", "Access Control", "Web Security"],
+      "Independent penetration test of RapidBoost, identifying and remediating a critical database access-control flaw along with several other vulnerabilities.",
     severity: "Critical",
   },
   {
     title: "Food-Delivery App Security Assessment",
     description:
-      "Conducted a security assessment of a food-delivery mobile application as an academic project, identifying and documenting multiple CVEs/CWEs, including a denial-of-service vulnerability and insecure token storage.",
-    tags: ["Mobile Security", "CVE/CWE", "Vulnerability Assessment"],
+      "Security assessment of a food-delivery mobile app, documenting multiple CVEs/CWEs including a denial-of-service vulnerability and insecure token storage.",
     severity: "High",
   },
   {
     title: "Vulnerability Assessment — Metasploitable 2",
-    description:
-      "A full penetration test and documented vulnerability assessment on Metasploitable 2, covering enumeration, exploitation, and reporting.",
-    tags: ["Nmap", "Metasploit", "Kali Linux"],
+    description: "Full penetration test and documented vulnerability assessment, covering enumeration, exploitation, and reporting.",
     severity: "Medium",
   },
   {
     title: "Home Security Lab",
-    description:
-      "Built a home lab using Wazuh SIEM, Kali Linux, and Metasploitable 2 to practice applied penetration-testing techniques.",
-    tags: ["Wazuh", "Kali Linux", "Metasploitable 2"],
+    description: "Built a home lab using Wazuh SIEM, Kali Linux, and Metasploitable 2 to practice applied penetration-testing techniques.",
   },
 ];
 
 const Findings = () => {
   return (
-    <section id="findings" className="py-16 md:py-24 border-b border-border">
+    <section id="findings" className="py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-6">
-        <SectionHeading
-          number="03"
-          title="Findings"
-          subtitle="Security assessments I've conducted, with severity as rated in each report."
-        />
+        <SectionHeading title="Findings" subtitle="Security assessments I've conducted." />
 
-        <div className="max-w-3xl">
+        <div>
           {FINDINGS.map((finding) => (
-            <div key={finding.title} className="ledger-row">
-              <div className="flex items-start justify-between gap-4 flex-wrap mb-2">
-                <h3 className="font-semibold text-foreground">{finding.title}</h3>
+            <div key={finding.title} className="block-link">
+              <div className="flex items-start gap-3 mb-2">
                 {finding.severity && (
-                  <span
-                    className={`font-mono text-[10px] uppercase tracking-wide px-2 py-0.5 border shrink-0 ${SEVERITY_STYLES[finding.severity]}`}
-                  >
-                    {finding.severity}
-                  </span>
+                  <span className={`w-2.5 h-2.5 rounded-full mt-2 shrink-0 ${SEVERITY_COLOR[finding.severity]}`} />
                 )}
+                <h3 className="font-display text-xl md:text-2xl font-bold text-foreground">{finding.title}</h3>
               </div>
-              <p className="text-muted-foreground text-sm mb-3 max-w-2xl">{finding.description}</p>
-              <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {finding.tags.map((tag) => (
-                  <span key={tag} className="font-mono text-xs text-primary/80">
-                    #{tag.replace(/\s+/g, "-").toLowerCase()}
-                  </span>
-                ))}
-              </div>
+              <p className="text-foreground/60 max-w-xl">{finding.description}</p>
             </div>
           ))}
         </div>

@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import SectionHeading from "./SectionHeading";
 
 const SOCIAL_LINKS = [
   { icon: Github, href: "https://github.com/naphtaliea", label: "GitHub" },
@@ -50,14 +49,15 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-24">
+    <section id="contact" className="py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-xl">
-          <SectionHeading
-            number="07"
-            title="Open a channel"
-            subtitle="Have a question or want to work together? Send a message directly."
-          />
+          <h2 className="font-display text-4xl md:text-6xl font-extrabold text-foreground tracking-tight mb-4">
+            Let's talk.
+          </h2>
+          <p className="text-foreground/60 text-lg mb-10 max-w-md">
+            Have a question or want to work together? Send a message directly.
+          </p>
 
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div className="grid sm:grid-cols-2 gap-6">
@@ -71,7 +71,6 @@ const Contact = () => {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Your name"
-                  className="bg-card border-border"
                 />
               </div>
               <div className="space-y-2">
@@ -84,7 +83,6 @@ const Contact = () => {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="your@email.com"
-                  className="bg-card border-border"
                 />
               </div>
             </div>
@@ -99,11 +97,11 @@ const Contact = () => {
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="Your message..."
-                className="bg-card border-border resize-none"
+                className="resize-none"
               />
             </div>
 
-            <Button type="submit" disabled={isSubmitting} className="w-full gap-2" size="lg">
+            <Button type="submit" disabled={isSubmitting} className="w-full gap-2 rounded-full" size="lg">
               {isSubmitting ? "Sending..." : (
                 <>
                   <Send className="w-5 h-5" />
@@ -113,15 +111,14 @@ const Contact = () => {
             </Button>
           </form>
 
-          <div className="flex items-center gap-3 mt-10 pt-8 border-t border-border">
-            <span className="case-label mr-2">Also reachable at</span>
+          <div className="flex items-center gap-3 mt-10">
             {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
               <a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+                className="w-11 h-11 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
                 aria-label={label}
               >
                 <Icon className="w-4 h-4" />

@@ -10,12 +10,11 @@ const NotFound = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="case-frame p-8 text-center max-w-sm">
-        <p className="case-label mb-3">File not found</p>
-        <h1 className="font-display text-4xl font-bold text-foreground mb-2">404</h1>
-        <p className="mb-6 text-muted-foreground">No record matches this path.</p>
-        <a href="/" className="font-mono text-sm text-primary hover:underline">
-          Return to case file
+      <div className="text-center">
+        <h1 className="font-display text-6xl font-extrabold text-foreground mb-4">404</h1>
+        <p className="mb-6 text-foreground/60 text-lg">This page doesn't exist.</p>
+        <a href="/" className="text-primary font-medium hover:underline">
+          Back home
         </a>
       </div>
     </div>

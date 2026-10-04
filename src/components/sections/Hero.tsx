@@ -1,36 +1,36 @@
-import { Download, FileSearch } from "lucide-react";
+import { Download, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import DecryptText from "@/components/DecryptText";
 
 const Hero = () => {
   return (
-    <section className="relative pt-36 pb-20 md:pt-44 md:pb-28 border-b border-border">
+    <section className="min-h-screen flex items-center pt-20">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="max-w-2xl">
-          <p className="case-label mb-4">Subject — Cybersecurity Student &amp; Developer</p>
+        <div className="max-w-3xl">
+          <p className="text-primary font-medium mb-5">Cybersecurity · Ghana</p>
 
-          <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-6">
-            Naphtalie Amemo
-          </h1>
+          <DecryptText
+            as="h1"
+            text="NAPHTALIE AMEMO"
+            className="font-display text-5xl sm:text-6xl md:text-8xl font-extrabold text-foreground tracking-tight leading-[0.95] mb-6"
+          />
 
-          <p className="text-lg md:text-xl text-foreground/80 leading-relaxed mb-2 max-w-xl">
-            Cybersecurity student at UMAT, Tarkwa, Ghana — building secure systems
-            and breaking insecure ones, on the record.
-          </p>
-          <p className="font-mono text-sm text-muted-foreground mb-10">
-            4 projects shipped · 2 certifications in progress · 1 CTF completed
+          <p className="text-xl md:text-2xl text-foreground/70 leading-snug mb-10 max-w-xl">
+            Cybersecurity student &amp; developer — building secure systems
+            and breaking insecure ones.
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
-            <Button asChild size="lg" className="gap-2 text-base">
-              <a href="#findings">
-                <FileSearch className="w-5 h-5" />
-                View findings
+            <Button asChild size="lg" className="gap-2 text-base rounded-full px-7">
+              <a href="#work">
+                View work
+                <ArrowRight className="w-4 h-4" />
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="gap-2 text-base">
+            <Button asChild variant="outline" size="lg" className="gap-2 text-base rounded-full px-7">
               <a href="/Naphtalie-Amemo-CV.pdf" download>
-                <Download className="w-5 h-5" />
-                Download CV
+                <Download className="w-4 h-4" />
+                CV
               </a>
             </Button>
           </div>
