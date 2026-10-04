@@ -1,48 +1,28 @@
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import Navbar from "@/components/sections/Navbar";
+import Masthead from "@/components/sections/Masthead";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
-import Skills from "@/components/sections/Skills";
-import Projects from "@/components/sections/Projects";
+import Ledger from "@/components/sections/Ledger";
+import Findings from "@/components/sections/Findings";
+import DeployedSystems from "@/components/sections/DeployedSystems";
 import Certifications from "@/components/sections/Certifications";
-import Blog from "@/components/sections/Blog";
+import Writeups from "@/components/sections/Writeups";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
-import ScanlineOverlay from "@/components/sections/ScanlineOverlay";
-import StatusBar from "@/components/sections/StatusBar";
-import TerminalBoot from "@/components/TerminalBoot";
 
 const Index = () => {
-  const [booted, setBooted] = useState(false);
-
   return (
-    <>
-      <AnimatePresence>
-        {!booted && <TerminalBoot onComplete={() => setBooted(true)} />}
-      </AnimatePresence>
-
-      {booted && (
-        <motion.div
-          className="min-h-screen bg-background pb-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ScanlineOverlay />
-          <Navbar />
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Certifications />
-          <Blog />
-          <Contact />
-          <Footer />
-          <StatusBar />
-        </motion.div>
-      )}
-    </>
+    <div className="min-h-screen bg-background">
+      <Masthead />
+      <Hero />
+      <About />
+      <Ledger />
+      <Findings />
+      <DeployedSystems />
+      <Certifications />
+      <Writeups />
+      <Contact />
+      <Footer />
+    </div>
   );
 };
 

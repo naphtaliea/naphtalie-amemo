@@ -1,12 +1,19 @@
 import { useState, useRef } from "react";
 import { Send, Github, Linkedin, Mail, MessageCircle } from "lucide-react";
 import emailjs from "@emailjs/browser";
-import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import SectionHeading from "./SectionHeading";
+
+const SOCIAL_LINKS = [
+  { icon: Github, href: "https://github.com/naphtaliea", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/naphtalie-amemo/", label: "LinkedIn" },
+  { icon: Mail, href: "mailto:amemonaphtalie@gmail.com", label: "Email" },
+  { icon: MessageCircle, href: "https://wa.me/233257218162", label: "WhatsApp" },
+];
 
 const Contact = () => {
   const { toast } = useToast();
@@ -43,31 +50,16 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-32 relative z-10">
+    <section id="contact" className="py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="max-w-2xl mx-auto">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="section-title">Open a Channel</h2>
-            <p className="section-subtitle mx-auto">
-              Have a question or want to work together? Send a message directly.
-            </p>
-          </motion.div>
+        <div className="max-w-xl">
+          <SectionHeading
+            number="07"
+            title="Open a channel"
+            subtitle="Have a question or want to work together? Send a message directly."
+          />
 
-          <motion.form
-            ref={formRef}
-            onSubmit={handleSubmit}
-            className="space-y-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
@@ -79,7 +71,7 @@ const Contact = () => {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Your name"
-                  className="bg-card border-border input-glow"
+                  className="bg-card border-border"
                 />
               </div>
               <div className="space-y-2">
@@ -92,7 +84,7 @@ const Contact = () => {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="your@email.com"
-                  className="bg-card border-border input-glow"
+                  className="bg-card border-border"
                 />
               </div>
             </div>
@@ -107,7 +99,7 @@ const Contact = () => {
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="Your message..."
-                className="bg-card border-border input-glow resize-none"
+                className="bg-card border-border resize-none"
               />
             </div>
 
@@ -115,28 +107,24 @@ const Contact = () => {
               {isSubmitting ? "Sending..." : (
                 <>
                   <Send className="w-5 h-5" />
-                  Send Message
+                  Send message
                 </>
               )}
             </Button>
-          </motion.form>
+          </form>
 
-          <div className="flex items-center justify-center gap-4 mt-12">
-            {[
-              { icon: Github, href: "https://github.com/naphtaliea", label: "GitHub" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/naphtalie-amemo/", label: "LinkedIn" },
-              { icon: Mail, href: "mailto:amemonaphtalie@gmail.com", label: "Email" },
-              { icon: MessageCircle, href: "https://wa.me/233257218162", label: "WhatsApp" },
-            ].map(({ icon: Icon, href, label }) => (
+          <div className="flex items-center gap-3 mt-10 pt-8 border-t border-border">
+            <span className="case-label mr-2">Also reachable at</span>
+            {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
               <a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+                className="w-10 h-10 border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
                 aria-label={label}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="w-4 h-4" />
               </a>
             ))}
           </div>
