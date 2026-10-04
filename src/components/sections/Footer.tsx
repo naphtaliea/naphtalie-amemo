@@ -6,7 +6,7 @@ const Footer = () => (
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2 text-muted-foreground">
           <Shield className="w-5 h-5 text-primary" />
-          <span className="font-mono text-sm">© 2024 Naphtalie. All rights reserved.</span>
+          <span className="font-mono text-sm">© {new Date().getFullYear()} Naphtalie. All rights reserved.</span>
         </div>
         <p className="text-sm text-muted-foreground">
           Built with security in mind 🔒

@@ -40,42 +40,34 @@ const Certifications = () => {
 
         <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
           {CERTS.map((cert, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.15, duration: 0.5 }}
-            >
-              <Card className="bg-card border-border hover:border-primary/50 transition-colors">
-                <CardHeader className="pb-3">
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Award className="w-5 h-5 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <CardTitle className="text-base">{cert.name}</CardTitle>
-                      <p className="text-sm text-muted-foreground">{cert.issuer}</p>
-                    </div>
-                    <Badge variant="secondary" className="bg-primary/10 text-primary border-0 text-xs">
-                      {cert.status}
-                    </Badge>
+            <Card key={index} className="bg-card border-border hover:border-primary/50 transition-colors">
+              <CardHeader className="pb-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Award className="w-5 h-5 text-primary" />
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>Study Progress</span>
-                      <span>{cert.progress}%</span>
-                    </div>
-                    <Progress value={cert.progress} className="h-2 [&>div]:bg-primary" />
-                    <p className="text-xs text-muted-foreground mt-2">
-                      Expected: {cert.expected}
-                    </p>
+                  <div className="flex-1">
+                    <CardTitle className="text-base">{cert.name}</CardTitle>
+                    <p className="text-sm text-muted-foreground">{cert.issuer}</p>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+                  <Badge variant="secondary" className="bg-primary/10 text-primary border-0 text-xs">
+                    {cert.status}
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>Study Progress</span>
+                    <span>{cert.progress}%</span>
+                  </div>
+                  <Progress value={cert.progress} className="h-2 [&>div]:bg-primary" />
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Expected: {cert.expected}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>

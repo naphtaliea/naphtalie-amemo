@@ -61,7 +61,7 @@ const Hero = () => {
           </motion.div>
 
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-4 tracking-tight">
-            NAPHT<span className="text-primary">A</span>LIE
+            NAPHTALIE
           </h1>
 
           <div className="h-10 md:h-12 flex items-center justify-center mb-6">

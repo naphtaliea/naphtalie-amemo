@@ -37,18 +37,11 @@ const About = () => {
 
             <div className="grid grid-cols-3 gap-4">
               {STATS.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="text-center p-4 bg-card rounded-xl border border-border"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.4 }}
-                >
+                <div key={index} className="text-center p-4 bg-card rounded-lg border border-border">
                   <stat.icon className="w-5 h-5 text-primary mx-auto mb-2" />
                   <div className="text-2xl font-bold text-primary">{stat.number}</div>
                   <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </motion.div>
@@ -64,7 +57,7 @@ const About = () => {
               <div className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
                 <div className="w-56 h-56 md:w-72 md:h-72 rounded-full bg-card flex items-center justify-center border-2 border-primary/20">
                   {/* Mock terminal / nmap scan */}
-                  <div className="w-44 h-44 md:w-56 md:h-56 rounded-lg bg-background border border-border p-3 font-mono text-[10px] md:text-xs text-muted-foreground overflow-hidden">
+                  <div className="w-44 h-44 md:w-56 md:h-56 bg-background border border-border p-3 font-mono text-[10px] md:text-xs text-muted-foreground overflow-hidden">
                     <p className="text-primary">$ nmap -sV 192.168.1.0/24</p>
                     <p className="mt-1">Starting Nmap 7.94...</p>
                     <p className="text-muted-foreground/60 mt-1">PORT   STATE SERVICE</p>

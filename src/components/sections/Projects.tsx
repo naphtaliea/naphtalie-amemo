@@ -15,10 +15,10 @@ interface Project {
 }
 
 const SEVERITY_STYLES: Record<Severity, string> = {
-  Critical: "bg-red-500/10 text-red-400 border-red-500/30",
-  High: "bg-orange-500/10 text-orange-400 border-orange-500/30",
-  Medium: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30",
-  Low: "bg-blue-500/10 text-blue-400 border-blue-500/30",
+  Critical: "bg-[hsl(var(--severity-critical)/0.1)] text-[hsl(var(--severity-critical))] border-[hsl(var(--severity-critical)/0.3)]",
+  High: "bg-[hsl(var(--severity-high)/0.1)] text-[hsl(var(--severity-high))] border-[hsl(var(--severity-high)/0.3)]",
+  Medium: "bg-[hsl(var(--severity-medium)/0.1)] text-[hsl(var(--severity-medium))] border-[hsl(var(--severity-medium)/0.3)]",
+  Low: "bg-[hsl(var(--severity-low)/0.1)] text-[hsl(var(--severity-low))] border-[hsl(var(--severity-low)/0.3)]",
 };
 
 const DEV_PROJECTS: Project[] = [
@@ -78,13 +78,8 @@ const TABS = [
   { id: "security", label: "Security Projects", projects: SECURITY_PROJECTS },
 ];
 
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: index * 0.1, duration: 0.4 }}
-    className="w-full border border-border rounded-lg p-6 bg-card hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300"
-  >
+const ProjectCard = ({ project }: { project: Project }) => (
+  <div className="w-full border border-border rounded-lg p-6 bg-card hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
       <div className="flex-1 min-w-0">
         <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -137,7 +132,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         </div>
       )}
     </div>
-  </motion.div>
+  </div>
 );
 
 const Projects = () => {
@@ -190,8 +185,8 @@ const Projects = () => {
               transition={{ duration: 0.25 }}
               className="flex flex-col gap-4"
             >
-              {activeProjects.map((project, index) => (
-                <ProjectCard key={project.title} project={project} index={index} />
+              {activeProjects.map((project) => (
+                <ProjectCard key={project.title} project={project} />
               ))}
             </motion.div>
           </AnimatePresence>

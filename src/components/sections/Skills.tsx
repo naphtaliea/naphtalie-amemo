@@ -95,21 +95,15 @@ const Skills = () => {
               {Object.entries(SKILLS_DATA).map(([category, data]) => (
                 <TabsContent key={category} value={category} className="mt-0 absolute inset-x-0 top-0 data-[state=inactive]:hidden">
                   <div className="flex flex-wrap gap-3 justify-center">
-                    {data.skills.map((skill, i) => (
+                    {data.skills.map((skill) => (
                       <Tooltip key={skill.name}>
                         <TooltipTrigger asChild>
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: i * 0.05 }}
+                          <Badge
+                            variant="secondary"
+                            className="px-4 py-2 text-sm cursor-default hover:bg-primary hover:text-primary-foreground transition-colors"
                           >
-                            <Badge
-                              variant="secondary"
-                              className="px-4 py-2 text-sm cursor-default hover:bg-primary hover:text-primary-foreground transition-colors"
-                            >
-                              {skill.name}
-                            </Badge>
-                          </motion.div>
+                            {skill.name}
+                          </Badge>
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>{skill.desc}</p>

@@ -18,16 +18,34 @@ interface TerminalBootProps {
   onComplete: () => void;
 }
 
+const SESSION_KEY = "naphtalie-portfolio-booted";
+
 const TerminalBoot = ({ onComplete }: TerminalBootProps) => {
+  // Skip the boot sequence on repeat visits within the same tab session —
+  // the first-visit ritual shouldn't replay every time someone re-opens
+  // the page (e.g. a recruiter clicking back into the tab).
+  const alreadyBooted =
+    typeof sessionStorage !== "undefined" && sessionStorage.getItem(SESSION_KEY) === "true";
+
   const [visibleLines, setVisibleLines] = useState<number>(0);
-  const [isExiting, setIsExiting] = useState(false);
+  const [isExiting, setIsExiting] = useState(alreadyBooted);
 
   const handleComplete = useCallback(() => {
+    try {
+      sessionStorage.setItem(SESSION_KEY, "true");
+    } catch {
+      // sessionStorage unavailable (private browsing, etc.) — not critical
+    }
     setIsExiting(true);
-    setTimeout(onComplete, 600);
-  }, [onComplete]);
+    setTimeout(onComplete, alreadyBooted ? 0 : 600);
+  }, [onComplete, alreadyBooted]);
 
   useEffect(() => {
+    if (alreadyBooted) {
+      onComplete();
+      return;
+    }
+
     const timers: NodeJS.Timeout[] = [];
 
     BOOT_LINES.forEach((line, index) => {
@@ -42,13 +60,29 @@ const TerminalBoot = ({ onComplete }: TerminalBootProps) => {
     });
 
     return () => timers.forEach(clearTimeout);
-  }, [handleComplete]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alreadyBooted, handleComplete]);
+
+  // Skip on any keypress or click — the terminal conceit works best when
+  // it's optional, not a mandatory gate every single visit.
+  useEffect(() => {
+    if (alreadyBooted || isExiting) return;
+    const skip = () => handleComplete();
+    window.addEventListener("keydown", skip);
+    window.addEventListener("click", skip);
+    return () => {
+      window.removeEventListener("keydown", skip);
+      window.removeEventListener("click", skip);
+    };
+  }, [alreadyBooted, isExiting, handleComplete]);
+
+  if (alreadyBooted) return null;
 
   return (
     <AnimatePresence>
       {!isExiting && (
         <motion.div
-          className="fixed inset-0 z-[9999] bg-background flex items-center justify-center"
+          className="fixed inset-0 z-[9999] bg-background flex items-center justify-center cursor-pointer"
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
@@ -59,6 +93,9 @@ const TerminalBoot = ({ onComplete }: TerminalBootProps) => {
                 <span className="w-3 h-3 rounded-full bg-muted-foreground/50" />
                 <span className="w-3 h-3 rounded-full bg-muted-foreground/30" />
                 <span className="ml-3 text-xs text-muted-foreground">terminal</span>
+                <span className="ml-auto text-xs text-muted-foreground/60">
+                  press any key to skip
+                </span>
               </div>
 
               <div className="space-y-1.5 min-h-[280px]">

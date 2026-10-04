@@ -39,7 +39,7 @@ export default {
   				'monospace'
   			],
   			display: [
-  				'Space Mono',
+  				'JetBrains Mono',
   				'ui-monospace',
   				'SFMono-Regular',
   				'Menlo',
