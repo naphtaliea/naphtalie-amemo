@@ -20,17 +20,25 @@ const SYSTEMS: System[] = [
     live: "https://rapidboostgh.com",
   },
   {
-    name: "BookEasy",
-    description:
-      "SaaS appointment booking platform for Ghanaian businesses, enabling service providers to manage bookings and accept payments online.",
-    stack: ["React", "TypeScript", "Supabase", "Paystack"],
-    status: "Built",
+    name: "Carrington Express",
+    description: "Logistics/booking application for intercity bus travel in Ghana.",
+    stack: ["React", "TypeScript", "Cloudflare Workers", "Supabase", "Paystack"],
+    status: "Live",
+    live: "https://carringtonexpress.com",
   },
   {
-    name: "GhanaFeed",
-    description: "News aggregator that pulls and displays headlines from 11 Ghanaian news sources in one clean feed.",
-    stack: ["React", "Node.js", "Express"],
-    status: "Built",
+    name: "Bedarts Storefront",
+    description: "Customer-facing storefront for Bedarts, backed by Supabase.",
+    stack: ["Next.js", "TypeScript", "Supabase"],
+    status: "Live",
+    live: "https://bedarts-storefront.vercel.app",
+  },
+  {
+    name: "Bedarts POS",
+    description:
+      "Installable, offline-capable point-of-sale system for Bedarts — Supabase-backed sales data, PDF receipts, and analytics. Staff-facing, not publicly browsable.",
+    stack: ["Next.js", "TypeScript", "Supabase", "PWA"],
+    status: "Live",
   },
 ];
 

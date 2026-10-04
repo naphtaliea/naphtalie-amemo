@@ -2,7 +2,7 @@ import SectionHeading from "./SectionHeading";
 
 const STATS = [
   { label: "Certifications in progress", value: "2" },
-  { label: "Projects built", value: "3" },
+  { label: "Projects built", value: "4" },
   { label: "CTFs competed", value: "1" },
 ];
 

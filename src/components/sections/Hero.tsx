@@ -17,7 +17,7 @@ const Hero = () => {
             and breaking insecure ones, on the record.
           </p>
           <p className="font-mono text-sm text-muted-foreground mb-10">
-            3 projects shipped · 2 certifications in progress · 1 CTF completed
+            4 projects shipped · 2 certifications in progress · 1 CTF completed
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
