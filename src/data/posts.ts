@@ -6,6 +6,9 @@ export interface Post {
   content: string;
   category: string;
   date: string;
+  /** Slug of the related project in data/projects.ts */
+  project?: string;
+  featured?: boolean;
 }
 
 export const POSTS: Post[] = [
@@ -23,6 +26,7 @@ The fix is one rule: a queued sale leaves the device only after the server confi
 
 I also changed the sale function to return failures as values instead of throwing them. A thrown error reached the screen as a masked React error with no useful message, and a cashier cannot act on that.`,
     category: "Offline Systems",
+    project: "bedarts-pos",
     date: "2026-10-04",
   },
   {
@@ -39,6 +43,7 @@ The first fix read refunds through the server-side admin client after the app's 
 
 The lesson I took from it: a failed read and an empty read can look identical, so any money calculation should treat an unexpected empty result as suspicious until proven otherwise.`,
     category: "Database Security",
+    project: "bedarts-pos",
     date: "2026-10-09",
   },
   {
@@ -55,6 +60,7 @@ The storefront got the same treatment. Its order action recomputes prices from t
 
 The same review found other problems around the same idea, that the client cannot be trusted with anything that matters: a signup path that let anyone choose their own role, and public access to sale and stock functions. All of them are fixed.`,
     category: "Application Security",
+    project: "bedarts-pos",
     date: "2026-10-04",
   },
   {
@@ -73,6 +79,8 @@ The smaller fixes: anonymous access to pricing functions was revoked, order resp
 
 Each fix was checked again after it shipped. The one I would test for earlier next time is concurrency, because the original limiter looked correct until I sent requests in parallel.`,
     category: "Penetration Testing",
+    project: "rapidboost",
+    featured: true,
     date: "2026-08-18",
   },
   {
@@ -100,6 +108,12 @@ The point of the lab is to attack something I am allowed to break, and to see wh
     date: "2026-06-15",
   },
 ];
+
+export const readingMinutes = (post: Post) => Math.max(1, Math.round(post.content.split(/\s+/).length / 200));
+
+/** Featured post first, then newest first. */
+export const sortedPosts = () =>
+  [...POSTS].sort((a, b) => Number(!!b.featured) - Number(!!a.featured) || (a.date < b.date ? 1 : -1));
 
 export const getCaseNumber = (slug: string) => {
   const chronological = [...POSTS].sort((a, b) => (a.date > b.date ? 1 : -1));

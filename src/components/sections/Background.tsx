@@ -1,5 +1,5 @@
 import { Briefcase, GraduationCap } from "lucide-react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const EDUCATION = [
@@ -32,7 +32,7 @@ const Background = () => {
   return (
     <section id="background" className="py-20 md:py-32 relative z-10">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
+        <m.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -41,7 +41,7 @@ const Background = () => {
         >
           <h2 className="section-title">Education & Work</h2>
           <p className="section-subtitle mx-auto">Where I study and where I work.</p>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {GROUPS.map(({ heading, icon: Icon, items }) => (
@@ -58,7 +58,7 @@ const Background = () => {
                 {items.map((item) => (
                   <div key={item.title}>
                     <p className="font-mono text-xs text-primary mb-1">{item.period}</p>
-                    <p className="font-semibold text-foreground text-sm">{item.title}</p>
+                    <p className="font-semibold text-foreground">{item.title}</p>
                     <p className="text-sm text-muted-foreground">{item.detail}</p>
                   </div>
                 ))}

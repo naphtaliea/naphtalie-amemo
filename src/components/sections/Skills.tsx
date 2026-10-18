@@ -1,8 +1,6 @@
 import { Shield, Globe, Code } from "lucide-react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const SKILLS_DATA = {
   Development: {
@@ -48,7 +46,7 @@ const Skills = () => {
   return (
     <section id="skills" className="py-20 md:py-32 relative z-10">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
+        <m.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -56,56 +54,36 @@ const Skills = () => {
           transition={{ duration: 0.5 }}
         >
           <h2 className="section-title">Skills & Tools</h2>
-          <p className="section-subtitle mx-auto">
-            What I build with, and what I use to test it.
-          </p>
-        </motion.div>
+          <p className="section-subtitle mx-auto">What I build with, and what I use to test it.</p>
+        </m.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <Tabs defaultValue="Development" className="max-w-3xl mx-auto">
-            <TabsList className="grid grid-cols-3 w-full bg-secondary/50 mb-8">
-              {Object.entries(SKILLS_DATA).map(([category, data]) => {
-                const Icon = data.icon;
-                return (
-                  <TabsTrigger key={category} value={category} className="gap-2 text-xs md:text-sm">
-                    <Icon className="w-4 h-4" />
-                    <span className="hidden sm:inline">{category}</span>
-                    <span className="sm:hidden">{category.split(" ")[0]}</span>
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
+        <Tabs defaultValue="Development" className="max-w-4xl mx-auto">
+          <TabsList className="grid grid-cols-3 w-full h-auto bg-secondary/50 mb-8">
+            {Object.entries(SKILLS_DATA).map(([category, data]) => {
+              const Icon = data.icon;
+              return (
+                <TabsTrigger key={category} value={category} className="gap-2 min-h-[44px] text-sm">
+                  <Icon className="w-4 h-4" aria-hidden="true" />
+                  <span className="hidden sm:inline">{category}</span>
+                  <span className="sm:hidden">{category.split(" ")[0]}</span>
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
 
-            <div className="relative min-h-[220px]">
-              {Object.entries(SKILLS_DATA).map(([category, data]) => (
-                <TabsContent key={category} value={category} className="mt-0 absolute inset-x-0 top-0 data-[state=inactive]:hidden">
-                  <div className="flex flex-wrap gap-3 justify-center">
-                    {data.skills.map((skill) => (
-                      <Tooltip key={skill.name}>
-                        <TooltipTrigger asChild>
-                          <Badge
-                            variant="secondary"
-                            className="px-4 py-2 text-sm cursor-default hover:bg-primary hover:text-primary-foreground transition-colors"
-                          >
-                            {skill.name}
-                          </Badge>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{skill.desc}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    ))}
-                  </div>
-                </TabsContent>
-              ))}
-            </div>
-          </Tabs>
-        </motion.div>
+          {Object.entries(SKILLS_DATA).map(([category, data]) => (
+            <TabsContent key={category} value={category} className="mt-0">
+              <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {data.skills.map((skill) => (
+                  <li key={skill.name} className="px-4 py-3 bg-card border border-border rounded-lg hover:border-primary/50 transition-colors">
+                    <p className="font-medium text-foreground">{skill.name}</p>
+                    <p className="text-sm text-muted-foreground">{skill.desc}</p>
+                  </li>
+                ))}
+              </ul>
+            </TabsContent>
+          ))}
+        </Tabs>
       </div>
     </section>
   );

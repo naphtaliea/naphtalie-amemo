@@ -1,20 +1,8 @@
 import { useState } from "react";
-import { ExternalLink } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, ExternalLink } from "lucide-react";
+import { m, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-
-type Severity = "Critical" | "High" | "Medium" | "Low";
-
-interface Project {
-  title: string;
-  period: string;
-  description: string;
-  tags: string[];
-  highlights: string[];
-  more?: string[];
-  live?: { href: string; label: string };
-  severity?: Severity;
-}
+import { PROJECTS, SECURITY, type Project, type SecurityItem, type Severity } from "@/data/projects";
 
 const SEVERITY_STYLES: Record<Severity, string> = {
   Critical: "bg-[hsl(var(--severity-critical)/0.1)] text-[hsl(var(--severity-critical))] border-[hsl(var(--severity-critical)/0.3)]",
@@ -23,180 +11,113 @@ const SEVERITY_STYLES: Record<Severity, string> = {
   Low: "bg-[hsl(var(--severity-low)/0.1)] text-[hsl(var(--severity-low))] border-[hsl(var(--severity-low)/0.3)]",
 };
 
-const DEV_PROJECTS: Project[] = [
-  {
-    title: "Bedarts POS and online store",
-    period: "2026 – Present",
-    description: "Point-of-sale and ordering system for a cold store, in daily use for a month.",
-    tags: ["Next.js", "TypeScript", "Supabase", "Cloudflare"],
-    highlights: [
-      "Built the till to work offline: a queued sale leaves the device only after the server confirms it, and an idempotency key stops retries from recording a sale twice.",
-      "Closed security holes found in review: signup that let anyone make themselves admin, public access to sale and stock functions and to cost prices, and customer-set order prices.",
-      "Debugged end-of-day cash reconciliation and refunds in live use, including refunds charged to the wrong payment method and row-level-security reads that silently returned nothing. 22 Playwright tests cover the till on desktop and mobile.",
-    ],
-    more: [
-      "Admin, manager and cashier roles, with split payments across cash, mobile money and card.",
-      "Stock tracked in batches with expiry dates, PDF receipts and partial-item refunds.",
-      "The online store lets customers order and pay online.",
-    ],
-    live: { href: "https://storefront.bedarts.workers.dev", label: "Online store" },
-  },
-  {
-    title: "Carrington Express",
-    period: "2026",
-    description: "Intercity bus booking app, launched in September.",
-    tags: ["React 19", "TanStack Start", "Cloudflare Workers", "Supabase"],
-    highlights: [
-      "Built Paystack checkout with a signature-verified webhook, and Postgres seat locking to prevent double booking.",
-      "Added ticket emails, QR ticket scanning, automatic cancellation of stale bookings and Turnstile on forms.",
-    ],
-    more: [
-      "Admin dashboard for trips, bookings, routes and pickup points.",
-      "Sentry error tracking and KV caching of trip data.",
-      "Payments are currently paused.",
-    ],
-    live: { href: "https://carringtonexpress.com", label: "Visit site" },
-  },
-  {
-    title: "RapidBoost",
-    period: "2026 – Present",
-    description: "Social media marketing platform for Ghana.",
-    tags: ["TanStack Start", "Supabase", "Firebase"],
-    highlights: [
-      "Pentested my own platform and fixed the findings: a storage bucket anyone could read and write (now private, with signed URLs), anonymous access to pricing functions, and supplier details leaking in API responses.",
-      "Replaced a racy rate limiter with an atomic advisory-lock check and confirmed it holds under 25 simultaneous requests. Added a domain allowlist to stop an open redirect.",
-      "Fixed money bugs: wallet refunds when an order insert fails, and an admin profit chart that counted unpaid and refunded orders as revenue. Covered by 59 unit tests and Playwright tests, plus k6 load tests that refuse to run against production.",
-    ],
-    more: [
-      "Korapay payments with an HMAC-verified webhook.",
-      "Reseller storefronts, an affiliate programme and a public API.",
-      "Sentry monitoring with session replay.",
-    ],
-    live: { href: "https://rapidboostgh.com", label: "Visit site" },
-  },
-  {
-    title: "Hair Relief",
-    period: "2026 – Present",
-    description: "E-commerce store for a hair and wig brand.",
-    tags: ["React", "TanStack Start", "Supabase", "Cloudflare Workers"],
-    highlights: [
-      "Built a mobile-first shop with guest checkout, pay on delivery and an admin area. Fixed a database join that crashed checkout site-wide and admin pages that would not render.",
-    ],
-    more: [
-      "Shop filters for category, texture, length and price, plus a floating WhatsApp support button.",
-      "Owner-editable settings, delivery zones and product variants in the admin.",
-      "Checked on 360px and 390px phone screens, with 44px tap targets.",
-    ],
-    live: { href: "https://shop.jaynelle.workers.dev", label: "Visit site" },
-  },
-];
+const STATUS_STYLES: Record<Project["status"], string> = {
+  "In daily use": "bg-primary/10 text-primary border-primary/30",
+  Live: "bg-primary/10 text-primary border-primary/30",
+  Launched: "bg-secondary text-muted-foreground border-border",
+};
 
-const SECURITY_PROJECTS: Project[] = [
-  {
-    title: "RapidBoost penetration test",
-    period: "2026",
-    description:
-      "Pentested my own platform and fixed the findings: a storage bucket anyone could read and write (now private, with signed URLs), anonymous access to pricing functions, and supplier details leaking in API responses. Also replaced a racy rate limiter with an atomic advisory-lock check and added a domain allowlist to stop an open redirect.",
-    tags: ["Penetration Testing", "Access Control", "Web Security"],
-    highlights: [],
-    severity: "Critical",
-  },
-  {
-    title: "Bedarts POS security review",
-    period: "2026",
-    description:
-      "Closed security holes found in review: signup that let anyone make themselves admin, public access to sale and stock functions and to cost prices, and customer-set order prices.",
-    tags: ["Row-Level Security", "Authorization", "Pricing Integrity"],
-    highlights: [],
-  },
-  {
-    title: "Mobile app security assessment (academic project)",
-    period: "2026",
-    description:
-      "Assessed a food-delivery app and documented multiple CVEs/CWEs, including a denial-of-service flaw and insecure token storage.",
-    tags: ["Mobile Security", "CVE/CWE", "Vulnerability Assessment"],
-    highlights: [],
-  },
-  {
-    title: "Home security lab",
-    period: "2024 – Present",
-    description: "Wazuh SIEM, Kali Linux and Metasploitable 2 for practising penetration testing.",
-    tags: ["Wazuh", "Kali Linux", "Metasploitable 2"],
-    highlights: [],
-  },
-];
-
-const TABS = [
-  { id: "dev", label: "Projects", projects: DEV_PROJECTS },
-  { id: "security", label: "Security Experience", projects: SECURITY_PROJECTS },
-];
-
-const ProjectCard = ({ project }: { project: Project }) => (
-  <div className="w-full border border-border rounded-lg p-6 bg-card hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
-    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-      <div className="flex-1 min-w-0">
-        <p className="font-mono text-xs text-muted-foreground mb-1">{project.period}</p>
-        <div className="flex flex-wrap items-center gap-2 mb-2">
-          <h3 className="text-xl font-bold text-foreground">{project.title}</h3>
-          {project.severity && (
-            <span
-              className={`font-mono text-[10px] uppercase tracking-wide px-2 py-0.5 rounded border ${SEVERITY_STYLES[project.severity]}`}
-            >
-              {project.severity}
-            </span>
-          )}
-        </div>
-        <p className="text-muted-foreground text-sm mb-4">{project.description}</p>
-        {project.highlights.length > 0 && (
-          <ul className="list-disc pl-5 space-y-2 text-sm text-foreground/80 mb-4">
-            {project.highlights.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        )}
-        {project.more && (
-          <ul className="list-disc pl-5 space-y-1 text-xs text-muted-foreground mb-4">
-            {project.more.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        )}
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <Badge
-              key={tag}
-              variant="secondary"
-              className="bg-primary/10 text-primary border-0 text-xs"
-            >
-              {tag}
-            </Badge>
-          ))}
-        </div>
-      </div>
-      {project.live && (
-        <a
-          href={project.live.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="shrink-0 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-          aria-label={`${project.title}: ${project.live.label}`}
-        >
-          <span className="font-mono">{project.live.label}</span>
-          <ExternalLink className="w-5 h-5" />
-        </a>
-      )}
-    </div>
-  </div>
+const Chip = ({ className, children }: { className: string; children: React.ReactNode }) => (
+  <span className={`font-mono text-xs uppercase tracking-wide px-2 py-0.5 rounded border ${className}`}>{children}</span>
 );
 
+const ProjectCard = ({ project }: { project: Project }) => (
+  <article className="flex flex-col border border-border rounded-lg bg-card overflow-hidden hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
+    {/* Duplicate of the text link below, so it is hidden from keyboard and screen readers. */}
+    <a href={project.live.href} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true" className="block">
+      <div className="flex items-center gap-2 px-4 py-2 bg-background/60 border-b border-border">
+        <span className="w-2.5 h-2.5 rounded-full bg-destructive" />
+        <span className="w-2.5 h-2.5 rounded-full bg-muted-foreground/50" />
+        <span className="w-2.5 h-2.5 rounded-full bg-muted-foreground/30" />
+        <span className="ml-2 font-mono text-xs text-muted-foreground truncate">{new URL(project.live.href).host}</span>
+      </div>
+      <img
+        src={project.image.src}
+        alt={project.image.alt}
+        width={project.image.width}
+        height={project.image.height}
+        loading="lazy"
+        decoding="async"
+        className="w-full h-auto"
+      />
+    </a>
+
+    <div className="flex flex-col flex-1 p-6">
+      <div className="flex flex-wrap items-center gap-2 mb-2">
+        <span className="font-mono text-xs text-muted-foreground">{project.period}</span>
+        <Chip className={STATUS_STYLES[project.status]}>{project.status}</Chip>
+      </div>
+      <h3 className="text-xl font-bold text-foreground mb-2">{project.title}</h3>
+      <p className="text-muted-foreground text-sm mb-3">{project.summary}</p>
+      <p className="font-mono text-sm text-primary mb-4">$ {project.proof}</p>
+      <div className="flex flex-wrap gap-2 mb-4">
+        {project.tags.map((tag) => (
+          <Badge key={tag} variant="secondary" className="bg-primary/10 text-primary border-0 text-xs">
+            {tag}
+          </Badge>
+        ))}
+      </div>
+
+      <details className="group mt-auto">
+        <summary className="flex items-center gap-2 min-h-[44px] cursor-pointer list-none font-mono text-sm text-primary [&::-webkit-details-marker]:hidden">
+          What I built and fixed
+          <ChevronDown className="w-4 h-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+        </summary>
+        <ul className="list-disc pl-5 space-y-2 text-sm text-foreground/85 mt-2 mb-4">
+          {project.highlights.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+        <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground mb-2">
+          {project.more.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </details>
+
+      <a
+        href={project.live.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 min-h-[44px] font-mono text-sm text-muted-foreground hover:text-primary transition-colors"
+      >
+        {project.live.label}
+        <ExternalLink className="w-4 h-4" aria-hidden="true" />
+      </a>
+    </div>
+  </article>
+);
+
+const SecurityCard = ({ item }: { item: SecurityItem }) => (
+  <article className="border border-border rounded-lg p-6 bg-card hover:border-primary/50 transition-colors">
+    <div className="flex flex-wrap items-center gap-2 mb-2">
+      <span className="font-mono text-xs text-muted-foreground">{item.period}</span>
+      {item.severity && <Chip className={SEVERITY_STYLES[item.severity]}>{item.severity}</Chip>}
+    </div>
+    <h3 className="text-xl font-bold text-foreground mb-2">{item.title}</h3>
+    <p className="text-muted-foreground text-sm mb-4">{item.description}</p>
+    <div className="flex flex-wrap gap-2">
+      {item.tags.map((tag) => (
+        <Badge key={tag} variant="secondary" className="bg-primary/10 text-primary border-0 text-xs">
+          {tag}
+        </Badge>
+      ))}
+    </div>
+  </article>
+);
+
+const TABS = [
+  { id: "dev", label: "Projects" },
+  { id: "security", label: "Security Experience" },
+] as const;
+
 const Projects = () => {
-  const [activeTab, setActiveTab] = useState("dev");
-  const activeProjects = TABS.find((t) => t.id === activeTab)!.projects;
+  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]["id"]>("dev");
 
   return (
     <section id="projects" className="py-20 md:py-32 bg-secondary/30 relative z-10">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
+        <m.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -207,16 +128,19 @@ const Projects = () => {
           <p className="section-subtitle mx-auto">
             Products I've built, run and debugged end to end, and the security work around them.
           </p>
-        </motion.div>
+        </m.div>
 
-        {/* Tab Switcher */}
         <div className="flex justify-center mb-10">
-          <div className="inline-flex rounded-lg bg-secondary/50 p-1 border border-border">
+          <div role="tablist" aria-label="Project categories" className="inline-flex rounded-lg bg-secondary/50 p-1 border border-border">
             {TABS.map((tab) => (
               <button
                 key={tab.id}
+                role="tab"
+                id={`tab-${tab.id}`}
+                aria-selected={activeTab === tab.id}
+                aria-controls="projects-panel"
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative px-5 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                className={`px-5 min-h-[44px] text-sm font-medium rounded-md transition-all duration-200 ${
                   activeTab === tab.id
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
@@ -228,21 +152,20 @@ const Projects = () => {
           </div>
         </div>
 
-        {/* Project List */}
-        <div className="max-w-3xl mx-auto">
+        <div id="projects-panel" role="tabpanel" aria-labelledby={`tab-${activeTab}`} className="max-w-5xl mx-auto">
           <AnimatePresence mode="wait">
-            <motion.div
+            <m.div
               key={activeTab}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="flex flex-col gap-4"
+              className={activeTab === "dev" ? "grid md:grid-cols-2 gap-6 items-stretch" : "flex flex-col gap-4 max-w-3xl mx-auto"}
             >
-              {activeProjects.map((project) => (
-                <ProjectCard key={project.title} project={project} />
-              ))}
-            </motion.div>
+              {activeTab === "dev"
+                ? PROJECTS.map((project) => <ProjectCard key={project.slug} project={project} />)
+                : SECURITY.map((item) => <SecurityCard key={item.title} item={item} />)}
+            </m.div>
           </AnimatePresence>
         </div>
       </div>
