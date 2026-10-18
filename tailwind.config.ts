@@ -15,7 +15,7 @@ export default {
   	extend: {
   		fontFamily: {
   			sans: [
-  				'Hanken Grotesk',
+  				'IBM Plex Sans',
   				'ui-sans-serif',
   				'system-ui',
   				'-apple-system',
@@ -28,7 +28,7 @@ export default {
   				'sans-serif'
   			],
   			mono: [
-  				'Space Mono',
+  				'JetBrains Mono',
   				'ui-monospace',
   				'SFMono-Regular',
   				'Menlo',
@@ -39,17 +39,15 @@ export default {
   				'monospace'
   			],
   			display: [
-  				'Hanken Grotesk',
-  				'ui-sans-serif',
-  				'system-ui',
-  				'-apple-system',
-  				'BlinkMacSystemFont',
-  				'Segoe UI',
-  				'Roboto',
-  				'Helvetica Neue',
-  				'Arial',
-  				'Noto Sans',
-  				'sans-serif'
+  				'JetBrains Mono',
+  				'ui-monospace',
+  				'SFMono-Regular',
+  				'Menlo',
+  				'Monaco',
+  				'Consolas',
+  				'Liberation Mono',
+  				'Courier New',
+  				'monospace'
   			],
   			serif: [
   				'ui-serif',
@@ -126,11 +124,46 @@ export default {
   				to: {
   					height: '0'
   				}
+  			},
+  			'pulse-slow': {
+  				'0%, 100%': {
+  					opacity: '0.4'
+  				},
+  				'50%': {
+  					opacity: '0.8'
+  				}
+  			},
+  			float: {
+  				'0%, 100%': {
+  					transform: 'translateY(0)'
+  				},
+  				'50%': {
+  					transform: 'translateY(-10px)'
+  				}
+  			},
+  			typewriter: {
+  				'0%': {
+  					width: '0'
+  				},
+  				'100%': {
+  					width: '100%'
+  				}
+  			},
+  			blink: {
+  				'0%, 100%': {
+  					borderColor: 'hsl(var(--primary))'
+  				},
+  				'50%': {
+  					borderColor: 'transparent'
+  				}
   			}
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+  			'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
+  			float: 'float 6s ease-in-out infinite',
+  			blink: 'blink 1s step-end infinite'
   		},
   		boxShadow: {
   			'2xs': 'var(--shadow-2xs)',

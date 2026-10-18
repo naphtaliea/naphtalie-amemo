@@ -1,4 +1,6 @@
-import SectionHeading from "./SectionHeading";
+import { Briefcase, GraduationCap } from "lucide-react";
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const EDUCATION = [
   {
@@ -21,27 +23,48 @@ const WORK = [
   },
 ];
 
-const Group = ({ heading, items }: { heading: string; items: typeof EDUCATION }) => (
-  <div>
-    <h3 className="font-display text-2xl font-bold text-foreground mb-6">{heading}</h3>
-    {items.map((item) => (
-      <div key={item.title} className="mb-6">
-        <p className="font-mono text-xs text-muted-foreground mb-1">{item.period}</p>
-        <p className="font-semibold text-foreground">{item.title}</p>
-        <p className="text-foreground/60 max-w-md">{item.detail}</p>
-      </div>
-    ))}
-  </div>
-);
+const GROUPS = [
+  { heading: "Education", icon: GraduationCap, items: EDUCATION },
+  { heading: "Work experience", icon: Briefcase, items: WORK },
+];
 
 const Background = () => {
   return (
-    <section id="background" className="py-20 md:py-28">
+    <section id="background" className="py-20 md:py-32 relative z-10">
       <div className="container mx-auto px-4 md:px-6">
-        <SectionHeading title="Education and work" />
-        <div className="grid md:grid-cols-2 gap-12 max-w-4xl">
-          <Group heading="Education" items={EDUCATION} />
-          <Group heading="Work experience" items={WORK} />
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="section-title">Education & Work</h2>
+          <p className="section-subtitle mx-auto">Where I study and where I work.</p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {GROUPS.map(({ heading, icon: Icon, items }) => (
+            <Card key={heading} className="bg-card border-border hover:border-primary/50 transition-colors">
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <CardTitle className="text-base">{heading}</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                {items.map((item) => (
+                  <div key={item.title}>
+                    <p className="font-mono text-xs text-primary mb-1">{item.period}</p>
+                    <p className="font-semibold text-foreground text-sm">{item.title}</p>
+                    <p className="text-sm text-muted-foreground">{item.detail}</p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>
