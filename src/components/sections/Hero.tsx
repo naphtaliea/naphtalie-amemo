@@ -1,105 +1,40 @@
-import { useState, useEffect } from "react";
-import { Briefcase, Download, ChevronDown, Terminal } from "lucide-react";
-import { motion } from "framer-motion";
+import { Download, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const ROLES = [
-  "Cybersecurity Student",
-  "Penetration Tester",
-  "Ethical Hacker",
-  "Problem Solver",
-];
+import DecryptText from "@/components/DecryptText";
 
 const Hero = () => {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    const currentRole = ROLES[roleIndex];
-    let timeout: ReturnType<typeof setTimeout>;
-
-    if (!isDeleting && displayed.length < currentRole.length) {
-      timeout = setTimeout(() => setDisplayed(currentRole.slice(0, displayed.length + 1)), 80);
-    } else if (!isDeleting && displayed.length === currentRole.length) {
-      timeout = setTimeout(() => setIsDeleting(true), 2000);
-    } else if (isDeleting && displayed.length > 0) {
-      timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 40);
-    } else if (isDeleting && displayed.length === 0) {
-      setIsDeleting(false);
-      setRoleIndex((prev) => (prev + 1) % ROLES.length);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayed, isDeleting, roleIndex]);
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center terminal-bg overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: "1.5s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-border/20 rounded-full opacity-20" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-border/20 rounded-full opacity-30" />
-      </div>
+    <section className="min-h-screen flex items-center pt-20">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="max-w-3xl">
+          <p className="text-primary font-medium mb-5">Full-stack developer · Cybersecurity student · Ghana</p>
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <motion.div
-          className="text-center max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <motion.div
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            <Terminal className="w-4 h-4" />
-            <span className="font-mono">Available for opportunities</span>
-          </motion.div>
+          <DecryptText
+            as="h1"
+            text="AMEMO NAPHTALIE"
+            className="font-display text-5xl sm:text-6xl md:text-8xl font-extrabold text-foreground tracking-tight leading-[0.95] mb-6"
+          />
 
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-4 tracking-tight">
-            NAPHTALIE
-          </h1>
-
-          <div className="h-10 md:h-12 flex items-center justify-center mb-6">
-            <span className="font-mono text-xl md:text-2xl text-primary">
-              {displayed}
-              <span className="border-r-2 border-primary animate-blink ml-0.5">&nbsp;</span>
-            </span>
-          </div>
-
-          <p className="font-mono text-muted-foreground text-sm md:text-base mb-8">
-            &quot;Securing systems, one vulnerability at a time.&quot;
+          <p className="text-xl md:text-2xl text-foreground/70 leading-snug mb-10 max-w-xl">
+            Full-stack developer and BSc Cybersecurity student. I learn by building real
+            projects, then pentesting and debugging them while people use them.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <Button asChild size="lg" className="gap-2 text-base">
-              <a href="#projects">
-                <Briefcase className="w-5 h-5" />
-                View My Work
+          <div className="flex flex-wrap items-center gap-4">
+            <Button asChild size="lg" className="gap-2 text-base rounded-full px-7">
+              <a href="#work">
+                View work
+                <ArrowRight className="w-4 h-4" />
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="gap-2 text-base border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-              <a href="/Naphtalie-Amemo-CV.pdf" download>
-                <Download className="w-5 h-5" />
-                Download CV
+            <Button asChild variant="outline" size="lg" className="gap-2 text-base rounded-full px-7">
+              <a href="/Amemo-Naphtalie-Resume.pdf" download>
+                <Download className="w-4 h-4" />
+                Resume
               </a>
             </Button>
           </div>
-        </motion.div>
-
-        <motion.div
-          className="absolute bottom-6 left-1/2 -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <a href="#about" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Scroll down">
-            <ChevronDown className="w-8 h-8" />
-          </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

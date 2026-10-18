@@ -1,121 +1,54 @@
-import { Shield, Globe, Code, Terminal, Megaphone } from "lucide-react";
-import { motion } from "framer-motion";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import SectionHeading from "./SectionHeading";
 
-const SKILLS_DATA = {
-  "Security Tools": {
-    icon: Shield,
+const SKILL_GROUPS = [
+  {
+    label: "Development",
     skills: [
-      { name: "Kali Linux", desc: "Penetration testing OS" },
-      { name: "Nmap", desc: "Network discovery & security auditing" },
-      { name: "Metasploit", desc: "Exploitation framework" },
-      { name: "Burp Suite", desc: "Web vulnerability scanner" },
-      { name: "Wireshark", desc: "Network protocol analyzer" },
-      { name: "Wazuh", desc: "Open source SIEM platform" },
+      "TypeScript",
+      "JavaScript",
+      "Node.js",
+      "React",
+      "Next.js",
+      "TanStack Start",
+      "SQL (Postgres, RLS)",
+      "Supabase",
+      "Cloudflare Workers",
+      "Tailwind CSS",
+      "Playwright",
+      "Vitest",
+      "k6",
+      "Python",
     ],
   },
-  Networking: {
-    icon: Globe,
-    skills: [
-      { name: "TCP/IP", desc: "Core internet protocol suite" },
-      { name: "DNS", desc: "Domain name resolution" },
-      { name: "Firewalls", desc: "Network security systems" },
-      { name: "VPNs", desc: "Encrypted network tunneling" },
-      { name: "pfSense", desc: "Open source firewall/router" },
-    ],
+  {
+    label: "Security",
+    skills: ["Burp Suite", "Kali Linux", "Nmap", "Metasploit", "Wireshark", "Wazuh"],
   },
-  Programming: {
-    icon: Code,
-    skills: [
-      { name: "Python", desc: "Scripting & automation" },
-      { name: "JavaScript", desc: "Web development" },
-      { name: "TypeScript", desc: "Typed JavaScript for scalable apps" },
-      { name: "Bash", desc: "Shell scripting & automation" },
-    ],
+  {
+    label: "Languages",
+    skills: ["English (fluent)", "Twi (conversational)"],
   },
-  Platforms: {
-    icon: Terminal,
-    skills: [
-      { name: "TryHackMe", desc: "Cybersecurity training platform" },
-      { name: "Hack The Box", desc: "Penetration testing labs" },
-      { name: "GitHub", desc: "Code hosting & collaboration" },
-    ],
-  },
-  "Web & Marketing": {
-    icon: Megaphone,
-    skills: [
-      { name: "React", desc: "Front-end UI library" },
-      { name: "Web Development", desc: "Building and shipping web apps" },
-      { name: "Canva", desc: "Design & content creation" },
-      { name: "Meta Ads", desc: "Facebook & Instagram ad campaigns" },
-    ],
-  },
-};
+];
 
 const Skills = () => {
   return (
-    <section id="skills" className="py-20 md:py-32 relative z-10">
+    <section id="skills" className="py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="section-title">Skills & Tools</h2>
-          <p className="section-subtitle mx-auto">
-            The technologies and tools I use to secure and analyze systems.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <Tabs defaultValue="Security Tools" className="max-w-3xl mx-auto">
-            <TabsList className="grid grid-cols-2 md:grid-cols-5 w-full bg-secondary/50 mb-8">
-              {Object.entries(SKILLS_DATA).map(([category, data]) => {
-                const Icon = data.icon;
-                return (
-                  <TabsTrigger key={category} value={category} className="gap-2 text-xs md:text-sm">
-                    <Icon className="w-4 h-4" />
-                    <span className="hidden sm:inline">{category}</span>
-                    <span className="sm:hidden">{category.split(" ")[0]}</span>
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
-
-            <div className="relative min-h-[80px]">
-              {Object.entries(SKILLS_DATA).map(([category, data]) => (
-                <TabsContent key={category} value={category} className="mt-0 absolute inset-x-0 top-0 data-[state=inactive]:hidden">
-                  <div className="flex flex-wrap gap-3 justify-center">
-                    {data.skills.map((skill) => (
-                      <Tooltip key={skill.name}>
-                        <TooltipTrigger asChild>
-                          <Badge
-                            variant="secondary"
-                            className="px-4 py-2 text-sm cursor-default hover:bg-primary hover:text-primary-foreground transition-colors"
-                          >
-                            {skill.name}
-                          </Badge>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{skill.desc}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    ))}
-                  </div>
-                </TabsContent>
-              ))}
+        <SectionHeading title="Skills" />
+        <div className="space-y-8 max-w-3xl">
+          {SKILL_GROUPS.map((group) => (
+            <div key={group.label}>
+              <p className="font-mono text-xs text-muted-foreground mb-3">{group.label}</p>
+              <div className="flex flex-wrap gap-3">
+                {group.skills.map((skill) => (
+                  <span key={skill} className="tag">
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </div>
-          </Tabs>
-        </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
