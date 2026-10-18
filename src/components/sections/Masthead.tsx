@@ -36,7 +36,7 @@ const Masthead = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="font-display text-base font-bold text-foreground">
-            Naphtalie Amemo
+            Amemo Naphtalie
           </Link>
 
           <nav className="flex items-center gap-6">

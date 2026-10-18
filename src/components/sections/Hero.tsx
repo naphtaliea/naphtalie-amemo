@@ -7,17 +7,17 @@ const Hero = () => {
     <section className="min-h-screen flex items-center pt-20">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-3xl">
-          <p className="text-primary font-medium mb-5">Cybersecurity · Ghana</p>
+          <p className="text-primary font-medium mb-5">Full-stack developer · Cybersecurity student · Ghana</p>
 
           <DecryptText
             as="h1"
-            text="NAPHTALIE AMEMO"
+            text="AMEMO NAPHTALIE"
             className="font-display text-5xl sm:text-6xl md:text-8xl font-extrabold text-foreground tracking-tight leading-[0.95] mb-6"
           />
 
           <p className="text-xl md:text-2xl text-foreground/70 leading-snug mb-10 max-w-xl">
-            Cybersecurity student &amp; developer — building secure systems
-            and breaking insecure ones.
+            Full-stack developer and BSc Cybersecurity student. I learn by building real
+            projects, then pentesting and debugging them while people use them.
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
@@ -28,9 +28,9 @@ const Hero = () => {
               </a>
             </Button>
             <Button asChild variant="outline" size="lg" className="gap-2 text-base rounded-full px-7">
-              <a href="/Naphtalie-Amemo-CV.pdf" download>
+              <a href="/Amemo-Naphtalie-Resume.pdf" download>
                 <Download className="w-4 h-4" />
-                CV
+                Resume
               </a>
             </Button>
           </div>

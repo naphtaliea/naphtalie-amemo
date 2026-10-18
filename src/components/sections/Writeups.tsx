@@ -9,7 +9,7 @@ const Writeups = () => {
   return (
     <section id="writeups" className="py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-6">
-        <SectionHeading title="Writeups" subtitle="Notes on cybersecurity, CTFs, and what I'm learning." />
+        <SectionHeading title="Writeups" subtitle="Case studies from the projects above." />
 
         <div className="max-w-2xl">
           {posts.map((post) => (

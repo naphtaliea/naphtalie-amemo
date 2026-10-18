@@ -3,12 +3,14 @@ const About = () => {
     <section id="about" className="py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-6">
         <p className="text-xl md:text-2xl text-foreground/80 leading-snug max-w-2xl">
-          I'm a cybersecurity student at the University of Mines and Technology (UMAT) in
-          Tarkwa, Ghana, focused on penetration testing and ethical hacking — and a developer
-          who ships real products on the side.{" "}
+          Full-stack developer and BSc Cybersecurity student at the University of Mines and
+          Technology (UMaT). I learn by building real projects with React, TypeScript, Next.js,
+          Supabase and Cloudflare Workers, then pentesting and debugging them while people use
+          them.{" "}
           <span className="text-foreground font-medium">
-            4 projects shipped, 2 certifications in progress, 1 CTF completed.
-          </span>
+            Currently building web apps for small business clients.
+          </span>{" "}
+          Eager to keep learning in remote software engineering work.
         </p>
       </div>
     </section>

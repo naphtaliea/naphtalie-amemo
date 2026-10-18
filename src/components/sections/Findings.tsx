@@ -4,6 +4,7 @@ type Severity = "Critical" | "High" | "Medium" | "Low";
 
 interface Finding {
   title: string;
+  period: string;
   description: string;
   severity?: Severity;
 }
@@ -17,25 +18,28 @@ const SEVERITY_COLOR: Record<Severity, string> = {
 
 const FINDINGS: Finding[] = [
   {
-    title: "RapidBoost Security Assessment",
+    title: "RapidBoost penetration test",
+    period: "2026",
     description:
-      "Independent penetration test of RapidBoost, identifying and remediating a critical database access-control flaw along with several other vulnerabilities.",
+      "Pentested my own platform and fixed the findings: a storage bucket anyone could read and write (now private, with signed URLs), anonymous access to pricing functions, and supplier details leaking in API responses. Also replaced a racy rate limiter with an atomic advisory-lock check and added a domain allowlist to stop an open redirect.",
     severity: "Critical",
   },
   {
-    title: "Food-Delivery App Security Assessment",
+    title: "Bedarts POS security review",
+    period: "2026",
     description:
-      "Security assessment of a food-delivery mobile app, documenting multiple CVEs/CWEs including a denial-of-service vulnerability and insecure token storage.",
-    severity: "High",
+      "Closed security holes found in review: signup that let anyone make themselves admin, public access to sale and stock functions and to cost prices, and customer-set order prices.",
   },
   {
-    title: "Vulnerability Assessment — Metasploitable 2",
-    description: "Full penetration test and documented vulnerability assessment, covering enumeration, exploitation, and reporting.",
-    severity: "Medium",
+    title: "Mobile app security assessment (academic project)",
+    period: "2026",
+    description:
+      "Assessed a food-delivery app and documented multiple CVEs/CWEs, including a denial-of-service flaw and insecure token storage.",
   },
   {
-    title: "Home Security Lab",
-    description: "Built a home lab using Wazuh SIEM, Kali Linux, and Metasploitable 2 to practice applied penetration-testing techniques.",
+    title: "Home security lab",
+    period: "2024 – Present",
+    description: "Wazuh SIEM, Kali Linux and Metasploitable 2 for practising penetration testing.",
   },
 ];
 
@@ -43,7 +47,7 @@ const Findings = () => {
   return (
     <section id="findings" className="py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-6">
-        <SectionHeading title="Findings" subtitle="Security assessments I've conducted." />
+        <SectionHeading title="Security experience" subtitle="Assessments I've run and what I fixed." />
 
         <div>
           {FINDINGS.map((finding) => (
@@ -52,7 +56,10 @@ const Findings = () => {
                 {finding.severity && (
                   <span className={`w-2.5 h-2.5 rounded-full mt-2 shrink-0 ${SEVERITY_COLOR[finding.severity]}`} />
                 )}
-                <h3 className="font-display text-xl md:text-2xl font-bold text-foreground">{finding.title}</h3>
+                <div>
+                  <p className="font-mono text-xs text-muted-foreground mb-1">{finding.period}</p>
+                  <h3 className="font-display text-xl md:text-2xl font-bold text-foreground">{finding.title}</h3>
+                </div>
               </div>
               <p className="text-foreground/60 max-w-xl">{finding.description}</p>
             </div>
