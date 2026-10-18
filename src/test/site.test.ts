@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { POSTS, sortedPosts } from "@/data/posts";
 import { PROJECTS } from "@/data/projects";
-import { SITE_URL } from "@/lib/site";
+import { LINKS, SITE_URL } from "@/lib/site";
 
 const root = path.resolve(__dirname, "../..");
 const read = (file: string) => fs.readFileSync(path.join(root, file), "utf8");
@@ -54,6 +54,11 @@ describe("deploy config", () => {
   it("keeps the dark theme rules in the build when only index.html sets the class", () => {
     expect(read("index.html")).toContain('class="dark"');
     expect(read("tailwind.config.ts")).toMatch(/safelist:\s*\[\s*"dark"\s*\]/);
+  });
+
+  it("shows the email in the no-JavaScript fallback", () => {
+    expect(LINKS.email).toBe("amemonaphtalie@gmail.com");
+    expect(read("index.html")).toContain(`href="mailto:${LINKS.email}"`);
   });
 
   it("names a canonical URL and an absolute share image", () => {

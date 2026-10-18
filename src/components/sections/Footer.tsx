@@ -2,6 +2,7 @@ import { Shield } from "lucide-react";
 import { LINKS, RESUME_URL } from "@/lib/site";
 
 const FOOTER_LINKS = [
+  { label: "Email", href: `mailto:${LINKS.email}` },
   { label: "GitHub", href: LINKS.github },
   { label: "LinkedIn", href: LINKS.linkedin },
   { label: "Resume", href: RESUME_URL },

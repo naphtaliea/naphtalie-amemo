@@ -90,6 +90,15 @@ const Contact = () => {
           >
             <h2 className="section-title">Open a Channel</h2>
             <p className="section-subtitle mx-auto">Have a question or want to work together? Send a message directly.</p>
+            <p className="mt-3 font-mono text-sm text-muted-foreground">
+              Or email{" "}
+              <a
+                href={`mailto:${LINKS.email}`}
+                className="inline-flex items-center min-h-[44px] text-primary hover:underline"
+              >
+                {LINKS.email}
+              </a>
+            </p>
           </m.div>
 
           <m.form
